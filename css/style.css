@@ -11,20 +11,17 @@ body {
 #backgroundImg {
   position: absolute;
   width:668px;
-  /*height:379px;*/
   height:344px;
   background-size: cover;
   background-position: center;
   filter: blur(10px);
-  border:2px solid red;
+  border:2px solid grey;
 }
 
 #imageCanvas {
   position: absolute;
   top:95px;
-  /*top:35px;*/
-  /*left:35px;*/
-  /*border:2px solid red;*/
+
 }
 
 
@@ -69,8 +66,13 @@ input[type="file"] {
 }
 .custom-file-upload {
     display: flex;
+    justify-content: center;
     padding: 6px 12px;
     cursor: pointer;
-    position: absolute;
-    top:230px;
+}
+
+.fa {
+  position: absolute;
+  z-index:-100;
+  top:200px;
 }

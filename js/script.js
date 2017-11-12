@@ -25,25 +25,28 @@ var sliderPreviousValue;
                   canvas.height = 313;
                   ctx.drawImage(img,0,0,599,313);
 
+                  // if mouse moves over slider at all - do this!
                   slider.addEventListener("mousemove", () => {
                   if(slider.value !== sliderPreviousValue){
                     filter(Number(slider.value));
                   }
                   sliderPreviousValue = Number(slider.value);
-                  }); //slider event listener
+                }); //end slider event listener
 
 
               }
               img.src = event.target.result;
+              // copy image source to background variable
               backgroundImg = img.src;
+              // attach image with css blurring style
               $('#backgroundImg').css('background-image', 'url(' + backgroundImg + ')');
 
           }
-          alert(e.target.files[0]);
-          reader.readAsDataURL(e.target.files[0]);
 
+          reader.readAsDataURL(e.target.files[0]);
+          // make slider appear
           $('#sliderContainer').css('display', 'block');
-          $('.custom-file-upload').css('display', 'none');
+          // $('.custom-file-upload').css('display', 'none');
 
       }
 
@@ -56,20 +59,23 @@ var sliderPreviousValue;
 // reference: https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/globalCompositeOperation
 
       function filter(value) {
+        // redraw the image
         ctx.drawImage(img, 0, 0,599,313);
         // save the default state
         ctx.save();
         // check to see whether slider is increasing or decreasing
+        // if decreasing add darken filter to canvas
         if (value < 0) {
-          ctx.fillStyle = "black";
+          // ctx.fillStyle = "black";
           ctx.globalCompositeOperation = "darken";
+          // convert negative value to positive number with -value and set opacity overlay
           ctx.globalAlpha = -value / 100;
           ctx.fillRect(0, 0, canvas.width, canvas.height);
-
+          // if increasing add a white overlay to canvas
         } else if (value) {
           ctx.fillStyle = "white";
-          ctx.globalCompositeOperation = "lighten";
-          ctx.globalAlpha = 1;
+          // ctx.globalCompositeOperation = "lighten";
+
           ctx.drawImage(img, 0, 0,599,313);
           ctx.globalAlpha = value / 100;
           ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -88,10 +94,10 @@ var sliderPreviousValue;
 
         var brighten = function(imgData,amount) {
 
-        for (var i = 0; i < imgData.data.length; i += 4) { // we are jumping every 4 values of RGBA for every pixel
-        imgData.data[i] = imgData.data[i] + amount; // the red color channel
-        imgData.data[i + 1] = imgData.data[i + 1] + amount; // the green color channel
-        imgData.data[i + 2] = imgData.data[i + 2] + amount; // the blue color channel
+        for (var i = 0; i < imgData.data.length; i += 4) {
+        imgData.data[i] = imgData.data[i] + amount; // red channel
+        imgData.data[i + 1] = imgData.data[i + 1] + amount; // green channel
+        imgData.data[i + 2] = imgData.data[i + 2] + amount; // blue channel
         }
         ctx.putImageData(imgData,0,0);
         // return imgData;
