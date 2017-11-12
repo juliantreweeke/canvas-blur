@@ -33,6 +33,9 @@ var sliderPreviousValue;
                   sliderPreviousValue = Number(slider.value);
                 }); //end slider event listener
 
+                // add blue progress bar to slider's css
+                slider.addEventListener('mousemove', blueSlider, false);
+
 
               }
               img.src = event.target.result;
@@ -86,16 +89,20 @@ var sliderPreviousValue;
 
       // slider css progress blue
 
-      $('input[type="range"]').change(function() {
-        var val = ($(this).val() - $(this).attr('min')) / ($(this).attr('max') - $(this).attr('min'));
 
-        $(this).css('background-image',
+
+      function blueSlider(){
+        var val = ($('#slider').val() - $('#slider').attr('min')) / ($('#slider').attr('max') - $('#slider').attr('min'));
+
+        $('#slider').css('background-image',
           '-webkit-gradient(linear, left top, right top, ' +
           'color-stop(' + val + ', #007aff), ' +
           'color-stop(' + val + ', #C5C5C5)' +
           ')'
         );
-      });
+
+      }
+
 
 
 

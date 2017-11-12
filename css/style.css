@@ -32,11 +32,11 @@ body {
   position: absolute;
   top:410px;
   text-align: center;
-  width:550px;
+  width:570px;
 }
 
 .sliderText {
-  margin-top:30px;
+  margin-top:20px;
   color:#7f8e99;
 }
 
@@ -50,7 +50,7 @@ input[type='range']::-webkit-slider-thumb {
 }
 input[type='range']::-webkit-slider-runnable-track {
   width: 200px;
-  height: 3px;
+  height: 2px;
   background: #AAA;
 }
 
@@ -60,7 +60,7 @@ input[type='range']:focus {
 
 input[type="range"]{
     width: 100%;
-    height: 5px;
+    height: 4px;
     cursor: pointer;
     background-image: -webkit-gradient(
         linear,
