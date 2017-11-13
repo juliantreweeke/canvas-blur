@@ -12,7 +12,7 @@ const ctx = canvas.getContext('2d');
 
 // load image
 function handleImage(e) {
-  var reader = new FileReader();
+  let reader = new FileReader();
   reader.onload = function(event) {
     img = new Image();
 
@@ -21,16 +21,19 @@ function handleImage(e) {
       canvas.height = 313;
       ctx.drawImage(img, 0, 0, 599, 313);
 
+      // add blue brightness bar on image load
+      blueSlider();
+
       // if mouse moves over slider at all - do this!
       slider.addEventListener("mousemove", () => {
         if (slider.value !== sliderPreviousValue) {
+          // do canvas filter
           filter(Number(slider.value));
+          // adjust blue brightness bar on slider change
+          blueSlider();
         }
         sliderPreviousValue = Number(slider.value);
       }); //end slider event listener
-
-      // add blue progress bar to slider's css
-      slider.addEventListener('mousemove', blueSlider, false);
 
     }
     img.src = event.target.result;
@@ -48,8 +51,7 @@ function handleImage(e) {
 } // end load image
 
 // add filter to image
-// reference: https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/globalCompositeOperation
-
+// filter reference: https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/globalCompositeOperation
 function filter(value) {
   // redraw the image
   ctx.drawImage(img, 0, 0, 599, 313);
@@ -74,13 +76,16 @@ function filter(value) {
 
 // slider css progress blue
 function blueSlider() {
+  // dont apply this if using firefox
+  if (navigator.userAgent.indexOf('Firefox') > -1) {
+    return;
+  }
+
   var val = ($('#slider').val() - $('#slider').attr('min')) / ($('#slider').attr('max') - $('#slider').attr('min'));
 
   $('#slider').css('background-image',
     '-webkit-gradient(linear, left top, right top, ' +
     'color-stop(' + val + ', #007aff), ' +
     'color-stop(' + val + ', #C5C5C5)' +
-    ')'
-  );
-
+    ')');
 }
